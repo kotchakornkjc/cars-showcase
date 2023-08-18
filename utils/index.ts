@@ -1,11 +1,11 @@
 import { CarProps, FilterProps } from "@/types";
 
 export async function fetchCars(filters: FilterProps) {
-  const { manufacturer, model, year, fuel, limit } = filters
+  const { manufacturer, model, year, fuel, limit } = filters;
 
   const headers = {
-    'X-RapidAPI-Key': '0ce667cab3msh3098a24941dc58ep1627fejsna519a3700be6',
-    'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com'
+    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY,
+    "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
   };
 
   const response = await fetch(
@@ -36,26 +36,26 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
 };
 
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
-  const url = new URL('https://cdn.imagin.studio/getimage')
+  const url = new URL("https://cdn.imagin.studio/getimage");
 
   const { make, year, model } = car;
 
-  url.searchParams.append('customer', 'hrjavascript-mastery')
-  url.searchParams.append('make', make)
-  url.searchParams.append('modelFamily', model.split(' ')[0])
-  url.searchParams.append('zoomType', 'fullscreen')
-  url.searchParams.append('modelYear', `${year}`)
-  url.searchParams.append('angle', `${angle}`)
+  url.searchParams.append("customer", process.env.NEXT_PUBLIC_IMAGE_API_KEY || '');
+  url.searchParams.append("make", make);
+  url.searchParams.append("modelFamily", model.split(" ")[0]);
+  url.searchParams.append("zoomType", "fullscreen");
+  url.searchParams.append("modelYear", `${year}`);
+  url.searchParams.append("angle", `${angle}`);
 
-  return `${url}`
-}
+  return `${url}`;
+};
 
-export const updateSearchParams = (type: string, value:string) => {
-  const searchParams = new URLSearchParams(window.location.search)
+export const updateSearchParams = (type: string, value: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
 
-  searchParams.set(type, value)
+  searchParams.set(type, value);
 
-  const newPathName = `${window.location.pathname}?${searchParams.toString()}`
+  const newPathName = `${window.location.pathname}?${searchParams.toString()}`;
 
-  return newPathName
-}
+  return newPathName;
+};
